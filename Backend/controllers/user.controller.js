@@ -51,3 +51,13 @@ module.exports.loginUser = async(req,res,next)=>{
         next(error);
     }
 }
+
+module.exports.getUserProfile = async(req,res,next)=>{
+    
+    try{
+        const user = req.user;
+        return res.status(200).json({user});
+    }catch(error){
+        next(error);
+    }
+}
