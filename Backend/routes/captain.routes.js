@@ -14,7 +14,7 @@ router.post('/register',[
    body('vehicle.plate').isLength({min:3}).withMessage('Plate must be at least 3 characters long'),
    body('vehicle.capacity').isNumeric().withMessage('Capacity must be a number'),
    body('vehicle.vehicletype').isLength({min:3}).withMessage('Type must be at least 3 characters long'),
-],captainController.registerUser);
+],captainController.registerCaptain);
 
 
 
