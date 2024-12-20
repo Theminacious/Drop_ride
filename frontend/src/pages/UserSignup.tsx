@@ -24,15 +24,15 @@ const UserSignup = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-t from-teal-100 to-blue-50">
-      <header className="flex justify-center items-center h-16 bg-white shadow-md rounded-b-2xl">
+    <div className="flex flex-col min-h-screen bg-gradient-to-t from-teal-50 to-blue-100 p-6">
+      <header className="flex justify-center items-center h-16 bg-white shadow-md rounded-xl mb-8">
         <img className="w-16" src="https://links.papareact.com/6do" alt="Logo" />
       </header>
 
-      <div className="flex flex-col flex-grow justify-center px-6 space-y-6">
-        <h1 className="text-center text-3xl font-semibold text-gray-800">Join Us, User!</h1>
+      <div className="flex flex-col items-center mx-auto w-full max-w-sm">
+        <h1 className="text-3xl font-semibold text-gray-800 text-center mb-4">Create Your Account</h1>
 
-        <form onSubmit={submitHandler} className="space-y-5 bg-white p-8 rounded-xl shadow-lg">
+        <form onSubmit={submitHandler} className="space-y-5 bg-white p-8 rounded-lg shadow-lg w-full">
           <div className="flex space-x-4">
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">First Name</label>
@@ -40,7 +40,7 @@ const UserSignup = () => {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
-                className="mt-2 w-full px-4 py-3 bg-[#eeeeee] border rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-300 focus:outline-none"
+                className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
                 type="text"
                 placeholder="Enter your first name"
               />
@@ -51,7 +51,7 @@ const UserSignup = () => {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
-                className="mt-2 w-full px-4 py-3 bg-[#eeeeee] border rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-300 focus:outline-none"
+                className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
                 type="text"
                 placeholder="Enter your last name"
               />
@@ -64,56 +64,54 @@ const UserSignup = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-2 w-full px-4 py-3 bg-[#eeeeee] border rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-300 focus:outline-none"
+              className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
               type="email"
               placeholder="Enter your email"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-2 w-full px-4 py-3 bg-[#eeeeee] border rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-300 focus:outline-none"
+              className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
               type="password"
               placeholder="Enter your password"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="mt-2 w-full px-4 py-3 bg-[#eeeeee] border rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-300 focus:outline-none"
+              className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
               type="password"
               placeholder="Confirm your password"
             />
           </div>
+
           <button
             type="submit"
-            className="w-full py-3 bg-[#111] text-white font-medium rounded-lg hover:bg-gray-700 transition-all"
+            className="w-full py-3 bg-black text-white font-medium rounded-lg hover:bg-teal-400 transition-all"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-center text-gray-800 text-sm mt-4">
+        <p className="text-center text-sm text-gray-600 mt-4">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-teal-500 hover:underline">
+          <Link to="/login" className="text-teal-500 font-medium hover:underline">
             Sign in
           </Link>
         </p>
       </div>
 
-      <footer className="p-6 bg-gradient-to-t from-teal-100 to-blue-50">
-        <Link
-          to="/login"
-          className="block w-full py-3 text-center bg-[#f4f4f4] text-gray-800 font-medium rounded-lg hover:bg-gray-200 transition-all"
-        >
-          Sign in as User
-        </Link>
+      <footer className="text-center text-sm text-gray-500 mt-8">
+        © 2024 DropRide. All rights reserved.
       </footer>
     </div>
   );
