@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { UserDataContext } from '../context/userContext';
 
-const UserSignup = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const UserSignup: React.FC = () => {
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userData, setUserData] = useState({})
 
-  const submitHandler = (e: React.FormEvent) => {
+  // Destructure user and setUser from context
+  const userContext = useContext(UserDataContext);
+  if (!userContext) {
+    throw new Error('UserSignup must be used within a UserContext.Provider');
+  }
+  const [user, setUser] = userContext;
+
+  const navigate = useNavigate();
+
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
 
-    setUserData({
-      fullName: {
-        firstName: firstName,
-      lastName: lastName,
+    const newUser = {
+      fullname: {
+        firstname,
+        lastname,
       },
-      email: email,
-      password: password,
-    });
+      email,
+      password,
+    };
 
-    console.log({ firstName, lastName, email, password });
+    try {
+
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
+
+      if (response.status === 201) {
+        setUser(response.data.user);
+        localStorage.setItem('token',response.data.token)
+        navigate('/home');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      alert('Registration failed!');
+    }
+
+    // Reset form fields
     setFirstName('');
     setLastName('');
     setEmail('');
@@ -44,12 +68,14 @@ const UserSignup = () => {
           Join Us and Get Started
         </h1>
 
-        <form onSubmit={submitHandler} className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full">
+        <form 
+        onSubmit={(e)=>{submitHandler(e)}}
+         className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full">
           <div className="flex space-x-4">
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">First Name</label>
               <input
-                value={firstName}
+                value={firstname}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
                 className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -60,7 +86,7 @@ const UserSignup = () => {
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">Last Name</label>
               <input
-                value={lastName}
+                value={lastname}
                 onChange={(e) => setLastName(e.target.value)}
                 required
                 className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"

@@ -16,7 +16,7 @@ interface User {
 type UserContextType = [User, Dispatch<SetStateAction<User>>];
 
 // Create the context with an initial value
-export const UserDataContext = createContext<UserContextType | undefined>(undefined);
+export const UserDataContext = createContext<UserContextType | null>(null);
 
 // Define props for the provider component
 interface UserContextProps {
