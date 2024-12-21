@@ -7,6 +7,7 @@ const UserSignup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [userData, setUserData] = useState({})
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,7 +15,16 @@ const UserSignup = () => {
       alert('Passwords do not match!');
       return;
     }
-    // Handle sign-up logic here
+
+    setUserData({
+      fullName: {
+        firstName: firstName,
+      lastName: lastName,
+      },
+      email: email,
+      password: password,
+    });
+
     console.log({ firstName, lastName, email, password });
     setFirstName('');
     setLastName('');
@@ -25,14 +35,16 @@ const UserSignup = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-t from-teal-50 to-blue-100 p-6">
-      <header className="flex justify-center items-center h-16 bg-white shadow-md rounded-xl mb-8">
-        <img className="w-16" src="https://links.papareact.com/6do" alt="Logo" />
+      <header className="flex justify-center items-center h-12 mb-8">
+        <img className="w-12" src="https://links.papareact.com/6do" alt="Logo" />
       </header>
 
       <div className="flex flex-col items-center mx-auto w-full max-w-sm">
-        <h1 className="text-3xl font-semibold text-gray-800 text-center mb-4">Create Your Account</h1>
+        <h1 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+          Join Us and Get Started
+        </h1>
 
-        <form onSubmit={submitHandler} className="space-y-5 bg-white p-8 rounded-lg shadow-lg w-full">
+        <form onSubmit={submitHandler} className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full">
           <div className="flex space-x-4">
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">First Name</label>
