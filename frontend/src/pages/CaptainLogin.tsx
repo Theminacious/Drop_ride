@@ -1,17 +1,46 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios';
 
-const CaptainLogin = () => {
+
+const CaptainLogin =  () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captainData, setCaptainData] = useState({});
+  // const [captainData, setCaptainData] = useState({});
 
-  const submitHandler = (e: React.FormEvent) => {
+  const context = useContext(CaptainDataContext)
+  const navigate = useNavigate()
+
+  const [captain, setCaptain] = context;
+
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    setCaptainData({
+    
+    const captainLoginData={
       email: email,
       password: password,
-    });
+    }
+
+    try {
+      // console.log('Sending Data:', JSON.stringify(captainData, null, 2));
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/login`,
+        captainLoginData
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem('token', data.token);
+        navigate('/captain-home');
+      }
+    } catch (error) {
+      console.error('Error signing up:', error);
+      alert('Failed to sign up. Please try again.');
+    }
+
     setEmail('');
     setPassword('');
   };

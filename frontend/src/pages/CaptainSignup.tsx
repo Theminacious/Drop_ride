@@ -1,30 +1,75 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios';
 
 const CaptainSignup = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const [vehicleColor, setVehicleColor] = useState('');
   const [vehiclePlate, setVehiclePlate] = useState('');
-  const [vehicleCapacity, setVehicleCapacity] = useState('');
+  const [vehicleCapacity, setVehicleCapacity] = useState<number | ''>('');
   const [vehicleType, setVehicleType] = useState('');
 
-  const submitHandler = (e: React.FormEvent) => {
+  const context = useContext(CaptainDataContext);
+  if (!context) {
+    throw new Error('CaptainDataContext must be used within a CaptainContext.Provider');
+  }
+
+  const [captain, setCaptain] = context;
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({
-      fullName: { firstName, lastName },
+
+    if (vehicleCapacity === '' || isNaN(Number(vehicleCapacity))) {
+      alert('Vehicle capacity must be a valid number.');
+      return;
+    }
+
+    const captainData = {
+      fullname: {
+        firstname: firstName,
+        lastname: lastName,
+      },
       email,
       password,
-      vehicle: { vehicleColor, vehiclePlate, vehicleCapacity, vehicleType },
-    });
+      vehicle: {
+        color: vehicleColor,
+        plate: vehiclePlate,
+        capacity: Number(vehicleCapacity),
+        vehicletype: vehicleType,
+      },
+    };
 
-    // Reset form values after submission
-    setFirstName('');
-    setLastName('');
+    try {
+      // console.log('Sending Data:', JSON.stringify(captainData, null, 2));
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/register`,
+        captainData
+      );
+
+      if (response.status === 201) {
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem('token', data.token);
+        navigate('/captain-home');
+      }
+    } catch (error) {
+      console.error('Error signing up:', error);
+      alert('Failed to sign up. Please try again.');
+    }
+
+    // Reset fields after successful submission
     setEmail('');
     setPassword('');
+    setFirstName('');
+    setLastName('');
     setVehicleColor('');
     setVehiclePlate('');
     setVehicleCapacity('');
@@ -128,7 +173,7 @@ const CaptainSignup = () => {
                 onChange={(e) => setVehicleCapacity(e.target.value)}
                 required
                 className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
-                type="text"
+                type="number"
                 placeholder="Enter vehicle capacity"
               />
             </div>

@@ -4,13 +4,13 @@ import axios from 'axios';
 import { UserDataContext } from '../context/userContext';
 
 const UserSignup: React.FC = () => {
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Destructure user and setUser from context
+  // Accessing context with explicit typing
   const userContext = useContext(UserDataContext);
   if (!userContext) {
     throw new Error('UserSignup must be used within a UserContext.Provider');
@@ -28,25 +28,30 @@ const UserSignup: React.FC = () => {
 
     const newUser = {
       fullname: {
-        firstname,
-        lastname,
+        firstname: firstName,
+        lastname: lastName,
       },
       email,
       password,
     };
 
     try {
-
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
 
       if (response.status === 201) {
         setUser(response.data.user);
-        localStorage.setItem('token',response.data.token)
+        localStorage.setItem('token', response.data.token);
         navigate('/home');
       }
-    } catch (error) {
-      console.error('Error registering user:', error);
-      alert('Registration failed!');
+    } catch (error: unknown) {
+      // Handle error gracefully
+      if (axios.isAxiosError(error)) {
+        console.error('API Error:', error.response?.data || error.message);
+        alert(error.response?.data?.message || 'Registration failed!');
+      } else {
+        console.error('Unexpected Error:', error);
+        alert('An unexpected error occurred. Please try again.');
+      }
     }
 
     // Reset form fields
@@ -69,13 +74,14 @@ const UserSignup: React.FC = () => {
         </h1>
 
         <form 
-        onSubmit={(e)=>{submitHandler(e)}}
-         className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full">
+          onSubmit={submitHandler}
+          className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full"
+        >
           <div className="flex space-x-4">
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">First Name</label>
               <input
-                value={firstname}
+                value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
                 className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -86,7 +92,7 @@ const UserSignup: React.FC = () => {
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">Last Name</label>
               <input
-                value={lastname}
+                value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
                 className="mt-2 w-full px-4 py-3 bg-gray-100 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
