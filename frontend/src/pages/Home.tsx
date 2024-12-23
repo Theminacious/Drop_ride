@@ -115,7 +115,6 @@ const Home = () => {
         </div>
         <div ref={panelRef} className="h-0 bg-white overflow-hidden">
           <LocationSearchPanel
-            vehiclePanel={vehiclePanel}
             toggleVehiclePanel={toggleVehiclePanel}
           
           />
