@@ -95,9 +95,54 @@ const Home = () => {
           <LocationSearchPanel/>
         </div>
       </div>
+
+    <div className="fixed w-full z-10 bottom-0 bg-white px-3 py-6">
+      <div className="  flex  border-2 border-black mb-2 rounded-xl p-3 items-center justify-between">
+        <img className="h-12" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqfK0GHWJX4ZFuFeONtsWYBH-i_iNQGmIYbw&s" alt="" />
+        <div className="w-1/2">
+          <h4 className="font-medium text-lg">GoCar <span><i className="ri-user-3-fill"></i>4</span></h4>
+          <h5 className="font-medium text-base">2 mins away</h5>
+          <p className="font-normal text-xs text-gray-600">Affordable,compact rides</p>
+        </div>
+        <h2 className="text-xl font-semibold">&#8377;120</h2>
+
+      </div>
+      <div className="  flex  border-2 border-black mb-2 rounded-xl p-3 items-center justify-between">
+        <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688399652/assets/ba/dfb1d6-6c2b-4553-b929-9ff32f02a55e/original/UberXL.png" alt="" />
+        <div className="w-1/2">
+          <h4 className="font-medium text-lg">GoCar Premier <span><i className="ri-user-3-fill"></i>4</span></h4>
+          <h5 className="font-medium text-base">4 mins away</h5>
+          <p className="font-normal text-xs text-gray-600">Comfortable sedans, top-</p>
+        </div>
+        <h2 className="text-xl font-semibold">&#8377;220</h2>
+
+      </div>
+      <div className="  flex  border-2 border-black mb-2 rounded-xl p-3 items-center justify-between">
+        <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png" alt="" />
+        <div className="w-1/2">
+          <h4 className="font-medium text-lg">GoAuto <span><i className="ri-user-3-fill"></i>3</span></h4>
+          <h5 className="font-medium text-base">5 mins away</h5>
+          <p className="font-normal text-xs text-gray-600">Affordable,compact rides</p>
+        </div>
+        <h2 className="text-xl font-semibold">&#8377;180</h2>
+
+      </div>
+      <div className="  flex  border-2 border-black mb-2 rounded-xl p-3 items-center justify-between">
+        <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648177797/assets/fc/ddecaa-2eee-48fe-87f0-614aa7cee7d3/original/Uber_Moto_312x208_pixels_Mobile.png" alt="" />
+        <div className="w-1/2">
+          <h4 className="font-medium text-lg">GoBike <span><i className="ri-user-3-fill"></i>1</span></h4>
+          <h5 className="font-medium text-base">3 mins away</h5>
+          <p className="font-normal text-xs text-gray-600">Affordable motorcycle rides</p>
+        </div>
+        <h2 className="text-xl font-semibold">&#8377;100</h2>
+
+      </div>
+    </div>
+
     </div>
   );
 };
 
 export default Home;
+
 
