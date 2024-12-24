@@ -3,6 +3,9 @@ import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel";
 import VehiclePanel from "../components/VehiclePanel";
+import ConfirmedVehicle from "../components/ConfirmedVehicle";
+import LookingForDriver from "../components/LookingForDriver";
+import WaitForDriver from "../components/WaitForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -10,8 +13,15 @@ const Home = () => {
   const panelRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLDivElement>(null);
   const vehiclepanelRef = useRef<HTMLDivElement>(null);
+  const ConfirmedvehiclepanelRef = useRef<HTMLDivElement>(null);
+  const LookingForDriverRef = useRef<HTMLDivElement>(null);
+  const waitingForDriverRef = useRef<HTMLDivElement>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [vehiclePanel, setVehiclePanel] = useState(false);
+  const [confirmedvehiclePanel, setConfirmedvehiclePanel] = useState(false);
+  const [waitingForDriver, setWaitingForDriver] = useState(false);
+
+  const [vehicleFound, setVehicleFound] = useState(false);
 
   const togglePanel = () => {
     setIsPanelOpen((prev) => !prev);
@@ -38,6 +48,8 @@ const Home = () => {
       gsap.to(panelCloseRef.current, {
         opacity: 1,
       });
+     
+
       
     } else {
       gsap.to(panelRef.current, {
@@ -67,6 +79,56 @@ const Home = () => {
       });
     }
   }, [vehiclePanel]);
+  useEffect(() => {
+    if (confirmedvehiclePanel) {
+      gsap.to(ConfirmedvehiclepanelRef.current, {
+        duration: 0.5,
+        transform: "translateY(0%)",
+        ease: "power2.inOut",
+      });
+      
+    } else {
+      gsap.to( ConfirmedvehiclepanelRef.current, {
+        duration: 0.5,
+        transform: "translateY(100%)",
+        ease: "power2.inOut",
+      });
+    }
+  }, [confirmedvehiclePanel]);
+
+  useEffect(() => {
+    if (vehicleFound) {
+      gsap.to(LookingForDriverRef.current, {
+        duration: 0.5,
+        transform: "translateY(0%)",
+        ease: "power2.inOut",
+      });
+      
+    } else {
+      gsap.to( LookingForDriverRef.current, {
+        duration: 0.5,
+        transform: "translateY(100%)",
+        ease: "power2.inOut",
+      });
+    }
+  }, [vehicleFound]);
+
+  useEffect(() => {
+    if (waitingForDriver) {
+      gsap.to(waitingForDriverRef.current, {
+        duration: 0.5,
+        transform: "translateY(0%)",
+        ease: "power2.inOut",
+      });
+      
+    } else {
+      gsap.to( waitingForDriverRef.current, {
+        duration: 0.5,
+        transform: "translateY(100%)",
+        ease: "power2.inOut",
+      });
+    }
+  }, [waitingForDriver]);
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -123,16 +185,44 @@ const Home = () => {
         </div>
       </div>
 
+    {/* Vehicle Panel Component */}
       <div
         ref={vehiclepanelRef}
-        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14"
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12"
       >
-        <VehiclePanel setVehiclePanel={setVehiclePanel}/>
+        <VehiclePanel setConfirmVehiclePanel={setConfirmedvehiclePanel} setVehiclePanel={setVehiclePanel}/>
+      </div>
+
+    {/* confirmed Vehicle Panel */}
+
+      <div
+        ref={ConfirmedvehiclepanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <ConfirmedVehicle setConfirmVehiclePanel={setConfirmedvehiclePanel} setVehicleFound={setVehicleFound}  />
+        
+      </div>
+    {/* Looking for driver */}
+      <div
+      ref={LookingForDriverRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <LookingForDriver setVehicleFound={setVehicleFound}/>
+        
+      </div>
+
+      <div
+      ref={waitingForDriverRef}
+        className="fixed w-full z-10 bottom-0  bg-white px-3 py-6 pt-12"
+      >
+        <WaitForDriver waitingForDriver={setWaitingForDriver}/>
+        
       </div>
     </div>
   );
 };
 
 export default Home;
+
 
 

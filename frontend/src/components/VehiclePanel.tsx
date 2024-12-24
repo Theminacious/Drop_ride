@@ -2,7 +2,8 @@ import React from 'react';
 
 // Define prop types (if using TypeScript)
 interface VehiclePanelProps {
-   setVehiclePanel: (value: boolean) => void;
+   setVehiclePanel: React.Dispatch<React.SetStateAction<boolean>>;
+   setConfirmVehiclePanel: React.Dispatch<React.SetStateAction<boolean>>;
     
   }
 
@@ -48,6 +49,10 @@ const VehiclePanel :React.FC<VehiclePanelProps>= (props) => {
         ].map((option, index) => (
           <div
             key={index}
+            onClick={() => {
+              props.setVehiclePanel(false);
+              props.setConfirmVehiclePanel(true);
+            }}
             className="flex border-2 border-black mb-2 rounded-xl p-3 items-center justify-between"
           >
             <img className="h-12" src={option.img} alt={option.title} />
