@@ -1,8 +1,14 @@
 import React from 'react';
 
-const LocationSearchPanel = (props) => {
+// Define prop types (if using TypeScript)
+interface LocationSearchPanelProps {
+  toggleVehiclePanel: (value: boolean) => void;
+  setIsPanelOpen: (value: boolean) => void;
+}
+
+const LocationSearchPanel: React.FC<LocationSearchPanelProps> = (props) => {
   const locations = [
-    { id: 1, address: '24B, Near Kapoor\'s Cafe, Chandigarh' },
+    { id: 1, address: "24B, Near Kapoor's Cafe, Chandigarh" },
     { id: 2, address: 'Sector 17, Plaza, Chandigarh' },
     { id: 3, address: 'Phase 3B2, Mohali' },
   ];
@@ -13,7 +19,10 @@ const LocationSearchPanel = (props) => {
       {locations.map((location) => (
         <div
           key={location.id}
-          onClick={()=>{props.toggleVehiclePanel(true)}}
+          onClick={() => {
+            props.toggleVehiclePanel(true);
+            props.setIsPanelOpen(false);
+          }}
           className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer border border-gray-200"
         >
           <div className="bg-gray-200 h-10 w-10 flex items-center justify-center rounded-full">
