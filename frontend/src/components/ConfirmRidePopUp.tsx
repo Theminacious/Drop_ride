@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 interface ConfirmRidePopUpProps {
     setConfirmRidePopupPanel: (value: boolean) => void;
 }
 
 const ConfirmRidePopUp = ({ setConfirmRidePopupPanel }: ConfirmRidePopUpProps) => {
-    
+    const navigate = useNavigate()
 
     // Sample Ride Data (You would normally fetch this from an API or pass it as a prop)
     const rideData = {
@@ -14,7 +16,7 @@ const ConfirmRidePopUp = ({ setConfirmRidePopupPanel }: ConfirmRidePopUpProps) =
     };
 
     const handleConfirm = () => {
-        alert("Ride Confirmed!");
+       navigate('/captain-riding')
         setConfirmRidePopupPanel(false);
     };
 
