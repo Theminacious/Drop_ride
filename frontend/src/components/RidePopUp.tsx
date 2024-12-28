@@ -1,6 +1,9 @@
-import React from 'react';
+interface RidePopUpProps {
+    setRidePopupPanel: (value: boolean) => void;
+    setConfirmRidePopupPanel: (value: boolean) => void;
+}
 
-const RidePopUp = (props) => {
+const RidePopUp = (props: RidePopUpProps) => {
     return (
         <div className="p-8 bg-white rounded-xl shadow-xl max-w-md mx-auto border border-gray-200 relative">
             {/* Close Button */}
@@ -66,7 +69,8 @@ const RidePopUp = (props) => {
                 <div className="flex justify-center space-x-4 mt-6">
                     <button
                         onClick={() => {
-                            // Accept action
+                            props.setRidePopupPanel(false);
+                            props.setConfirmRidePopupPanel(true);
                         }}
                         className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 shadow-md transition duration-300"
                     >
