@@ -1,4 +1,4 @@
-export const getAddressCoordinate = async (address) => {
+module.exports.getAddressCoordinate = async (address) => {
     const apikey = process.env.GOOGLE_MAPS_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apikey}`;
     try {

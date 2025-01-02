@@ -2,8 +2,8 @@ const rideModel = require('../models/ride.model');
 const mapService = require('../services/maps.service');
 const { validationResult } = require('express-validator');
 
-async function getFare(pickup, destination, vehicleType) {
-    if (!pickup || !destination || !vehicleType) {
+async function getFare(pickup, destination) {
+    if (!pickup || !destination) {
         throw new Error('Pickup, destination, and vehicle type are required');
     }
     const distanceTime = await mapService.getDistanceTimes(pickup, destination);
@@ -30,21 +30,23 @@ async function getFare(pickup, destination, vehicleType) {
     // Calculate the fare based on the vehicle type
     switch (vehicleType) {
         case 'bike':
-            fare = baseFare + (distance * perKmRate.bike) + (duration * perMinuteRate.bike);
+            fare =     Math.round(baseFare + (distance * perKmRate.bike) + (duration * perMinuteRate.bike));
             break;
         case 'car':
-            fare = baseFare + (distance * perKmRate.car) + (duration * perMinuteRate.car);
+            fare =Math.round( baseFare + (distance * perKmRate.car) + (duration * perMinuteRate.car));
             break;
         case 'auto':
-            fare = baseFare + (distance * perKmRate.auto) + (duration * perMinuteRate.auto);
+            fare = Math.round(baseFare + (distance * perKmRate.auto) + (duration * perMinuteRate.auto));
             break;
         default:
             throw new Error('Invalid vehicle type');
     }
 
     // Return the calculated fare as an object
-    return {fare };
+    return fare ;
 }
+
+module.exports.getFare = getFare;
 
 function getOtp(num)
 {
