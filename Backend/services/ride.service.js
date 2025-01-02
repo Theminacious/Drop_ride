@@ -43,7 +43,12 @@ async function getFare(pickup, destination, vehicleType) {
     }
 
     // Return the calculated fare as an object
-    return { fare };
+    return {fare };
+}
+
+function getOtp(num)
+{
+    return otp = crypto.randomInt(Math.pow(10, num-1), Math.pow(10, num)).toString();
 }
 
 
@@ -59,6 +64,7 @@ module.exports.createRide = async ({
         user,
         pickup,
         destination,
+        otp: getOtp(4),
         fare: fare.fare,
     });
     return ride.save();
